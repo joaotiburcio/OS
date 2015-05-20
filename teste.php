@@ -8,14 +8,15 @@ $area = new OS\Tabelas\Area();
 $usuario = new OS\Tabelas\Usuarios();
 $tarefa = new OS\Tabelas\Tarefas();
 
+$usuario->setSenha('123123');
+echo $usuario-> getSenha();
+
 $tarefa->setArea($area);
 $tarefa->setUsuarioAtribuido($usuario);
 $tarefa->setUsuarioCriado($usuario);
 
 //$usuario->id;
-$usuario->setSenha('123123');
 
-echo $usuario-> getSenha();
 
 
 //var_dump($usuario);

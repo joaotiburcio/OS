@@ -15,8 +15,3 @@ $tarefa->setArea($area);
 $tarefa->setUsuarioAtribuido($usuario);
 $tarefa->setUsuarioCriado($usuario);
 
-//$usuario->id;
-
-
-
-//var_dump($usuario);

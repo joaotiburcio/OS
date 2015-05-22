@@ -3,9 +3,19 @@
     
     margin-top: 60px;
 }
-.os-titulo span.glyphicon-plus{
+.os-titulo span.glyphicon{
     float: right;
 }
+#accordion a{
+    color: #333;
+}
 
-
+.panel-body .campo-rotulo{
+    font-weight: bold;
+    min-width: 135px;
+    display: inline-block;
+}
+.campo-valor select{
+    min-width: 150px;
+}
 

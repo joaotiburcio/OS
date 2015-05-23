@@ -1,44 +1,63 @@
 
 $(function(){
-   $(' <div class="panel panel-default">'
+   
+   $.get('../Controlador/listagem.php',{},function(retorno){
+      var obj = eval(retorno); 
+      addTarefa(obj);
+   });
+   
+            
+});
+
+function addTarefa(obj)
+{
+    var i;
+    for(i=0; obj.length>0; i++)
+    {
+        
+        var data = new Date(obj[i].datacriacao);
+        
+    
+
+    $(' <div class="panel panel-default" osnum= "'+obj[i].id+'">'
                         +'<div class="panel-heading" role="tab" id="headingOne">'
-                        +'<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">'
+                        +'<a data-toggle="collapse" data-parent="#accordion" href="#dadostarefa-'+obj[i].id+'" aria-expanded="true" aria-controls="'+obj[i].id+'">'
                             +'<h4 class="panel-title os-titulo">'
-                                    +'ordem de serviço nº= xxxx'
+                                    +'#'+obj[i].id + " - " + obj[i].titulo
                                 +'<span class="glyphicon glyphicon-plus" ></span>'
                             +'</h4>'
                         +'</a>'
                         +'</div>'
-                        +'<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">'
+                        +'<div id="dadostarefa-'+obj[i].id+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">'
                             +'<div class="panel-body">'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Solicitante</span>'
-                                    +'<span class= "campo-valor">*Nome do Usuario*</span>'
+                                    +'<span class= "campo-valor">'+ obj[i].nome+'</span>'
                                 +'</div>'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Data da Solicitação</span>'
-                                    +'<span class= "campo-valor">*Data*</span>'
+                                    +'<span class= "campo-valor">'+data.toLocaleString()+'</span>'
                                 +'</div>'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Area</span>'
-                                    +'<span class= "campo-valor">*area*</span>'
+                                    +'<span class= "campo-valor">'+ obj[i].area_id+'</span>'
                                 +'</div>'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Prazo</span>'
-                                    +'<span class= "campo-valor">*prazo*</span>'
+                                    +'<span class= "campo-valor">'+ obj[i].prazo+'</span>'
                                 +'</div>'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Descrição</span>'
-                                    +'<span class= "campo-valor">*descricao*</span>'
+                                    +'<span class= "campo-valor">'+ obj[i].descricao+'</span>'
                                 +'</div>'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Observação</span>'
-                                    +'<span class= "campo-valor">*observacao*</span>'
+                                    +'<span class= "campo-valor">'+ obj[i].observacao+'</span>'
                                 +'</div>'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Status</span>'
                                     +'<span class= "campo-valor">'
-                                        +'<select>'
+                                        +'<select class ="select-status">'
                                            +' <option value="">----</option>'
                                             +'<option value="0">Aberto</option>'
                                             +'<option value="1">Concluido</option>'
@@ -50,17 +69,31 @@ $(function(){
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Prioridade</span>'
                                     +'<span class= "campo-valor">'
-                                        +'<select>'
+                                        +'<select class ="select-prioridade">'
                                             +'<option value =" ">---</option>'
-                                            +'<option value =" 0">Urgente</option>'
-                                            +'<option value =" 1">Importante</option>'
-                                            +'<option value =" 2">normal</option>'
+                                            +'<option value ="0">Urgente</option>'
+                                            +'<option value ="1">Importante</option>'
+                                            +'<option value ="2">normal</option>'
                                         +'</select>'
                                     +'</span>'
                                 +'</div>'
                             +'</div>'
                         +'</div>'
                     +'</div>').appendTo('#accordion');
-    
-});
-
+                    
+                    $('#dadostarefa-'+obj[i].id+' .select-status option[value="'+obj[i].status+'"]').prop('selected', true);
+                    $('#dadostarefa-'+obj[i].id+' .select-prioridade option[value="'+obj[i].prioridade+'"]').prop('selected', true);
+            
+             $('.panel-collapse').on('shown.bs.collapse', function(){
+                $('.os-titulo span')
+                        .removeClass('glyphicon-plus')
+                        .addClass('glyphicon-minus');
+            });
+            
+            $('.panel-collapse').on('hidden.bs.collapse', function(){
+                $('.os-titulo span')
+                        .removeClass('glyphicon-minus')
+                        .addClass('glyphicon-plus');
+            });
+        }
+}

@@ -17,5 +17,7 @@
 }
 .campo-valor select{
     min-width: 150px;
+    color: green;
 }
+
 

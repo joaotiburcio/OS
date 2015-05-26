@@ -6,6 +6,14 @@
 .os-titulo span.glyphicon{
     float: right;
 }
+.os-titulo span.olho{
+    float: left;
+    margin-right:6px;
+}
+.os-titulo span.olho-completo{
+    color: green;
+    
+}
 #accordion a{
     color: #333;
 }
@@ -17,7 +25,8 @@
 }
 .campo-valor select{
     min-width: 150px;
-    color: green;
+    color:red;
 }
+
 
 

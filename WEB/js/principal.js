@@ -23,7 +23,7 @@ function addTarefa(obj)
                         +'<div class="panel-heading" role="tab" id="headingOne">'
                         +'<a data-toggle="collapse" data-parent="#accordion" href="#dadostarefa-'+obj[i].id+'" aria-expanded="true" aria-controls="'+obj[i].id+'">'
                             +'<h4 class="panel-title os-titulo">'
-                                    +'#'+obj[i].id + " - " + obj[i].titulo
+                               +'<span class ="glyphicon glyphicon-eye-open olho"></span>' +obj[i].id + " - " + obj[i].titulo
                                 +'<span class="glyphicon glyphicon-plus" ></span>'
                             +'</h4>'
                         +'</a>'
@@ -32,7 +32,7 @@ function addTarefa(obj)
                             +'<div class="panel-body">'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Solicitante</span>'
-                                    +'<span class= "campo-valor">'+ obj[i].nome+'</span>'
+                                    +'<span class= "campo-valor">'+ obj[i].usuario+'</span>'
                                 +'</div>'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Data da Solicitação</span>'
@@ -40,7 +40,7 @@ function addTarefa(obj)
                                 +'</div>'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Area</span>'
-                                    +'<span class= "campo-valor">'+ obj[i].area_id+'</span>'
+                                    +'<span class= "campo-valor">'+ obj[i].area+'</span>'
                                 +'</div>'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Prazo</span>'
@@ -85,13 +85,13 @@ function addTarefa(obj)
                     $('#dadostarefa-'+obj[i].id+' .select-prioridade option[value="'+obj[i].prioridade+'"]').prop('selected', true);
             
              $('.panel-collapse').on('shown.bs.collapse', function(){
-                $('.os-titulo span')
+                $ (this).parent().find('.os-titulo span')
                         .removeClass('glyphicon-plus')
                         .addClass('glyphicon-minus');
             });
             
             $('.panel-collapse').on('hidden.bs.collapse', function(){
-                $('.os-titulo span')
+                $(this).parent().find('.os-titulo span')
                         .removeClass('glyphicon-minus')
                         .addClass('glyphicon-plus');
             });

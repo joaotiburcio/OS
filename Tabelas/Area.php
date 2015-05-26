@@ -12,6 +12,14 @@ class Area
     
     protected $nome;
     
+    protected $pdo;
+
+
+    public function __construct(\PDO $pdo) 
+    {
+        $this->pdo = $pdo;
+    }
+            
     function getId() 
     {
         return $this->id;
@@ -32,7 +40,11 @@ class Area
         $this->nome = $nome;
     }
 
-
+    public function save()
+    {
+        $sql = 'INSERT INTO area("nome) VALUES (?)';
+            
+    }
     
    
 }

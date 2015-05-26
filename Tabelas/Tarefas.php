@@ -18,8 +18,15 @@ class Tarefas
     protected $prioridade;
     protected $prazo;
     
-    
-    public function setArea(\OS\Tabelas\Area $objArea)
+    protected $pdo;
+
+
+    public function __construct(\PDO $pdo) 
+    {
+        $this->pdo = $pdo;
+    }
+
+        public function setArea(\OS\Tabelas\Area $objArea)
     {
         $this->area_id = $objArea->getId();
     }
@@ -53,6 +60,10 @@ class Tarefas
     
     public function  setPrioridade($valor)
     {
+         if(!is_numeric($valor))
+        {
+            throw new Exception('Voce não informou um numero valido!');// LOG ERROS.
+        }
     $this->prioridade= $valor;
     }
     
@@ -68,6 +79,7 @@ class Tarefas
     
     public function getPrioridade()
     {
+       
         return $this->prioridade;
     }
     
@@ -106,4 +118,20 @@ class Tarefas
         return $this->id;
     }
     
+    public function   findAll()
+    {
+        $sql = "SELECT t.id, u.nome AS usuario, a.nome AS area ,t.datacriacao, t.descricao, t.observacao, t.status, t.prioridade, t.prazo, t.titulo 
+            FROM tarefas t ,usuarios u, area a
+            WHERE t.usuario_id_criado=u.id
+            AND t.area_id= a.id";
+        
+        $lista = $this->pdo->query($sql)->fetchAll(\PDO::FETCH_CLASS,__CLASS__, array($this->pdo));
+        
+        return $lista;
+    }
+            
+    public function save()
+    {
+        
+    }
 }

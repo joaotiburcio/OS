@@ -1,0 +1,5 @@
+[15-05-25 20:23:18] [] [Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.65 Safari/537.36 ]-SQLSTATE[HY000] [14] unable to open database file
+[15-05-25 20:24:25] [] [Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.65 Safari/537.36 ]-SQLSTATE[HY000] [14] unable to open database file
+[15-05-25 20:24:26] [] [Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.65 Safari/537.36 ]-SQLSTATE[HY000] [14] unable to open database file
+[15-05-25 20:24:27] [] [Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.65 Safari/537.36 ]-SQLSTATE[HY000] [14] unable to open database file
+[15-05-25 20:24:27] [] [Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.65 Safari/537.36 ]-SQLSTATE[HY000] [14] unable to open database file

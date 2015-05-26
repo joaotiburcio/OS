@@ -1,11 +1,20 @@
 <?php
 
-$db = new PDO('sqlite:'.__DIR__.'/../database/OS.db.sqlite' );
+require_once '../Tabelas/Tarefas.php';
 
+try
+{
+        $db = new PDO('sqlite:'.__DIR__.'/../database/OS.db.sqlite' );
+        
+        $tarefas = new OS\Tabelas\Tarefas($db);
+        
+        $lista = $tarefas->findAll();
+        
 
-$sql = "SELECT t.id, u.nome,t.area_id,t.datacriacao, t.descricao, t.observacao, t.status, t.prioridade, t.prazo, t.titulo  FROM tarefas t ,usuarios u
-WHERE t.usuario_id_criado=u.id";
-
-$lista = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-
-echo json_encode($lista);
+        echo json_encode($lista);
+        
+} catch (Exception $e){            // log de erros geral aparece no NOTEPED
+    
+    $log = "[".date('y-m-d H:i:s')."] [".$_SERVER['REMOT_ADDR']."] [".$_SERVER['HTTP_USER_AGENT']." ]-".$e->getMessage().PHP_EOL;
+    file_put_contents('log.txt', $log , FILE_APPEND);   
+}

@@ -1,17 +1,21 @@
 <?php
 
-require_once '/Tabelas/Area.php';
-require_once '/Tabelas/Usuarios.php';
-require_once '/Tabelas/Tarefas.php';
+require_once './Tabelas/Area.php';
+require_once './Tabelas/Usuarios.php';
+require_once './Tabelas/Tarefas.php';
 
-$area = new OS\Tabelas\Area();
-$usuario = new OS\Tabelas\Usuarios();
-$tarefa = new OS\Tabelas\Tarefas();
+use OS\Tabelas\Area;
 
-$usuario->setSenha('123123');
-echo $usuario-> getSenha();
+$db = new PDO('sqlite:'.__DIR__.'/database/OS.db.sqlite');
 
-$tarefa->setArea($area);
-$tarefa->setUsuarioAtribuido($usuario);
-$tarefa->setUsuarioCriado($usuario);
+$area = new OS\Tabelas\Area($db);
+
+$todos = Area::listAll($db);
+
+$obj = $area->findById(3);
+
+//$obj->delete();
+
+print($obj);
+
 

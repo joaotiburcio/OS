@@ -5,7 +5,6 @@ $(function(){
       var obj = eval(retorno); 
       addTarefa(obj);
    });
-   
             
 });
 
@@ -16,8 +15,6 @@ function addTarefa(obj)
     {
         
         var data = new Date(obj[i].datacriacao);
-        
-    
 
     $(' <div class="panel panel-default" osnum= "'+obj[i].id+'">'
                         +'<div class="panel-heading" role="tab" id="headingOne">'

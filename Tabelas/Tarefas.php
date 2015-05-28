@@ -7,7 +7,6 @@ class Tarefas
 {
 
     protected $id;
-    
     protected $usuario_id_criado;
     protected $usuario_id_atribuido;
     protected $area_id;
@@ -17,7 +16,6 @@ class Tarefas
     protected $status;
     protected $prioridade;
     protected $prazo;
-    
     protected $pdo;
 
 

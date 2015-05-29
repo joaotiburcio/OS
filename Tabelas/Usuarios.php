@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace OS\Tabelas;
 
 class Usuarios

@@ -7,9 +7,25 @@ class Tarefas
 {
 
     protected $id;
+    /**
+     *
+     * @var \OS|Tabelas\usuarios
+     */
     protected $usuario_id_criado;
+    /**
+     *
+     * @var \OS\Tabelas\usuarios
+     */
     protected $usuario_id_atribuido;
+    /**
+     *
+     * @var \OS\Tabelas\area
+     */
     protected $area_id;
+    /**
+     *
+     * @var \DateTime
+     */
     protected $datacriacao;
     protected $observacao;
     protected $descricao;
@@ -38,7 +54,7 @@ class Tarefas
 
         public function setArea(\OS\Tabelas\Area $objArea)
     {
-        $this->area_id = $objArea->getId();
+        $this->area_id = $objArea;
     }
     
     /**
@@ -203,15 +219,86 @@ class Tarefas
      * salva o registro na base de dados
      */
     public function save()
+            
     {
+        $id_usuario=($this->usuario_id_atribuido instanceof \OS\Tabelas\Usuarios )? $this->usuario_id_atribuido->getId():'null';
+         
+            $valores= array(
+           // $this->usuario_id_criado->getId(),
+                1,
+            $id_usuario,
+            $this->area_id->getId(),
+            $this->datacriacao->format('Y-m-d H:i:s'),
+            $this->descricao,
+            $this->observacao,
+            $this->status,
+            $this->prioridade,
+            $this->prazo,
+            $this->titulo
+        
+        );
+    
+          if($this->id =='')
+        {
         $sql = "INSERT INTO tarefas (usuario_id_criado, usuario_id_atribuido,
             area_id , datacriacao, descricao, observacao, status, prioridade, 
             prazo, titulo)
-            VALUES (1, 1, 1, '2010-10-10 10:10:10', 'uma descricao aqui' ,
-            'observacao add ',0, 1 ,5 ,  'um teste novo')" ;
+            VALUES (?, ?, ?,?, ? ,
+            ?,?, ? ,? , ?)" ;
+      
+        
+        }  else {
+            
+        
+           $sql= "UPDATE tarefas SET"
+            ."usuario_id_criado = ?,"
+             ."usuario_id_atribuido = ?,"
+             ."area_id = ?,"
+             ."datacriacao = ?,"
+             ."descricao = ?,"
+             ."observacao = ?,"
+             ."status = ?,"
+             ."prioridade = ?,"
+             ."prazo = ?,"
+             . "titulo = ?"
+             ."WHERE id = ?" ;
+             
+         
+          $valores[]= $this->id;
+        } 
+        
+        try{
+            $prep = $this->pdo->prepare($sql);
+            
+            if ($prep->execute($valores)== FALSE)
+            {
+                throw new \Exception('Não executou um sql direito'); 
+            }
+        }  catch (\PDOException $e)
+        {
+            echo $e->getMessage();
+        }
     }
    
-
+    public function findByid($id)
+    {
+        $sql= "SELECT * FROM tarefas WHERE id = ?";
+        $prep = $this->pdo->prepare($sql);
+        $prep->execute(array($id));
+        
+        return $prep->fetchobject('OS\Tabelas\Terafas', array($this->pdo));
+        
+    }
+    
+    public function findByTitulo($valor)
+    {
+        $sql= "SELECT * FROM tarefas WHERE titulo like '%".$valor."%'";
+        //$prep = $this->pdo->prepare($sql);
+        //$prep->execute(array($valor));
+        
+        return $this->pdo->query($sql)->fetchAll(\PDO::FETCH_CLASS , 'OS\Tabelas\Tarefas', array($this->pdo));
+        
+    }
 
     
 }

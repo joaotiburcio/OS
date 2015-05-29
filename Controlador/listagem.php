@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'../Tabelas/Tarefas.php';
+require_once '../Tabelas/Tarefas.php';
 
     try
     {
@@ -10,14 +10,26 @@ require_once __DIR__.'../Tabelas/Tarefas.php';
         
         $lista = $tarefas->findAll();
         
-        foreach ($lista as $_tarefas)
+        $listaNormalizada = array();
+        
+        foreach ($lista as $_tarefa)
         {
-            
+           $novo ["id"]= $_tarefa->getId();
+           $novo ["area"]= $_tarefa->getArea();
+           $novo ["datacriacao"]= $_tarefa->getDatacriacao();
+           $novo ["descricao"]= $_tarefa->getDescricao();
+           $novo ["observacao"]= $_tarefa->getObservacao();
+           $novo ["prazo"]= $_tarefa->getPrazo();
+           $novo ["prioridade"]= $_tarefa->getPrioridade();
+           $novo ["status"]= $_tarefa->getStatus();
+           $novo ["titulo"]= $_tarefa->getTitulo();
+           $novo ["usuario_atribuido"]= $_tarefa->getUsuarioAtribuido();
+           $novo ["usuario_criado"]= $_tarefa->getUsuarioCriado();
+           
+           $listaNormalizada[]= $novo;
+           
         }
-        print_r($lista);die();
-        $obj = $lista[0];
-
-        echo json_encode($lista);
+        echo json_encode($listaNormalizada);
         
   }     catch (Exception $e)
     {            // log de erros geral aparece no NOTEPED

@@ -159,21 +159,38 @@ class Tarefas
         return $this->descricao;
     }
     
+    /**
+     * 
+     * @return \DateTime
+     */
     public function getDataCriacao()
     {
         return $this->datacriacao;
     }
     
+    /**
+     * 
+     * @return \OS\Tabelas\Usuarios
+     */
     public function getUsuarioAtribuido()
     {
         return $this->usuario_id_atribuido;
     }
     
+    
+    /**
+     * 
+     * @return \OS\Tabelas\Usuarios
+     */
     public function getUsuarioCriado()
     {
         return $this->usuario_id_criado;
     }
     
+    /**
+     * 
+     * @return \OS\Tabelas\Area
+     */
     public function getArea()
     {
         return $this->area_id;
@@ -199,7 +216,7 @@ class Tarefas
     
     /**
      * 
-     * @return \OS\Tabeals\Tarefas
+     * @return \OS\Tabelas\Tarefas
      */
     
     public function   findAll()
@@ -300,5 +317,9 @@ class Tarefas
         
     }
 
-    
+    function getStatus() {
+        return $this->status;
+    }
+
+
 }

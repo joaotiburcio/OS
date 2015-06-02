@@ -4,21 +4,24 @@ namespace OS\Tabelas;
 
 /**
  * Mapea a tabela area
- * @author João T.
+ * 
+ * @author Edir
  * @since 27-05-2015
  * @package OS\Tabelas
  * @version 1.0-beta
  * 
  */
-
-class Area 
+class Area implements \JsonSerializable
 {
     protected $id;
     protected $nome;
     
     protected $pdo;
 
-
+    /**
+     * 
+     * @param \PDO $pdo
+     */
     public function __construct(\PDO $pdo) 
     {
         $this->pdo = $pdo;
@@ -94,41 +97,49 @@ class Area
     public function findById($valor)
     {
         return $this->findBy('id', $valor);
-       
     }
-    
     
     /**
      * 
      * @param string $coluna Nome da coluna da tabela
-     * @param string $valor  Valor a ser pesquisado
+     * @param string $valor Valor a ser pesquisado
      * @return type
      */
-    protected function findBy($coluna , $valor)
+    protected function findBy($coluna, $valor)
     {
         try{
-        $sql = 'SELECT id, nome FROM area WHERE '.$coluna.' = :valor';
-        $prep = $this->pdo->prepare($sql);
-        //$prep->bindValue(':coluna', $coluna);
-        $prep->bindValue(':valor', $valor);
-        $prep->execute();
-        $retorno = $prep->fetchObject('OS\Tabelas\Area', array($this->pdo));
-        
-        return $retorno;
+            $sql = 'SELECT id, nome FROM area WHERE '.$coluna.' = :valor';
+            
+            $prep = $this->pdo->prepare($sql);
+            $prep->bindValue(':valor', $valor);
+            $prep->execute();
+            $retorno = $prep->fetchObject('OS\Tabelas\Area', array($this->pdo));
+
+            return $retorno;
         } catch (\PDOException $e)
         {
             echo $e->getMessage();
         }
     }
     
+    /**
+     * Deleta o registro
+     */
     public function delete()
     {
-        $sql = 'DELETE FROM area WHERE id= ?';
+        $sql = 'DELETE FROM area WHERE id = ?';
         $prep = $this->pdo->prepare($sql);
-        $prep->execute(array ($this->id));
+        $prep->execute(array($this->id));
     }
     
-    public function __toString() {
-        return$this->id.': '.$this->nome;
+    public function __toString() 
+    {
+        return $this->id.': '.$this->nome;
     }
+    
+    public function jsonSerialize() 
+    {
+        return array ('id'=> $this->id , 'nome'=>  $this->nome );
+    }
+
 }

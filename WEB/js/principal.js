@@ -5,7 +5,18 @@ $(function(){
       var obj = eval(retorno); 
       addTarefa(obj);
    });
-            
+        
+                         $( "#dialog" ).dialog({
+                        autoOpen: false,
+                        show: {
+                          effect: "shake",
+                          duration: 1000
+                        },
+                        hide: {
+                          effect: "explode",
+                          duration: 1000
+                      }
+     });
 });
 
 function addTarefa(obj)
@@ -15,8 +26,15 @@ function addTarefa(obj)
     {
         
         var data = new Date(obj[i].datacriacao);
+        
+        if(obj[i].prazo != null)
+        {
+            var prazo = obj[i].prazo ;
+        }else{
+            var prazo = "Não definido";
+        }
 
-    $(' <div class="panel panel-default" osnum= "'+obj[i].id+'">'
+    $(' <div class="panel panel-default ">'
                         +'<div class="panel-heading" role="tab" id="headingOne">'
                         +'<a data-toggle="collapse" data-parent="#accordion" href="#dadostarefa-'+obj[i].id+'" aria-expanded="true" aria-controls="'+obj[i].id+'">'
                             +'<h4 class="panel-title os-titulo">'
@@ -26,10 +44,10 @@ function addTarefa(obj)
                         +'</a>'
                         +'</div>'
                         +'<div id="dadostarefa-'+obj[i].id+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">'
-                            +'<div class="panel-body">'
+                            +'<div class="panel-body" osnum= "'+obj[i].id+'">'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Solicitante</span>'
-                                    +'<span class= "campo-valor">'+ obj[i].usuario+'</span>'
+                                    +'<span class= "campo-valor">'+ obj[i].usuario_criado+'</span>'
                                 +'</div>'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Data da Solicitação</span>'
@@ -41,7 +59,7 @@ function addTarefa(obj)
                                 +'</div>'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Prazo</span>'
-                                    +'<span class= "campo-valor">'+ obj[i].prazo+'</span>'
+                                    +'<span class= "campo-valor">'+prazo+'</span>'
                                 +'</div>'
                                 +'<div>'
                                     +'<span class= "campo-rotulo">Descrição</span>'
@@ -74,6 +92,7 @@ function addTarefa(obj)
                                         +'</select>'
                                     +'</span>'
                                 +'</div>'
+                                +'<button  type="button" class="btn btn-success pull-right btn-atualizar">Atualizar</button>' 
                             +'</div>'
                         +'</div>'
                     +'</div>').appendTo('#accordion');
@@ -91,6 +110,26 @@ function addTarefa(obj)
                 $(this).parent().find('.os-titulo span')
                         .removeClass('glyphicon-minus')
                         .addClass('glyphicon-plus');
+            });
+            
+            $('.btn-atualizar').click(function(){
+               var infos =  {
+                   id:$(this).parent().attr('osnum'),
+                   status:$(this).parent().find('.select-status'). val(),
+                   prioridade:$(this).parent().find('.select-prioridade'). val()
+               };
+               
+              $.post('../Controlador/atualizar.php', infos , function(retorno){
+                 
+                 if(retorno.status == true)
+                 {
+                     
+                        $( "#dialog" ).dialog( "open" );
+
+                 }
+                
+                  
+              }, "json");
             });
         }
 }
